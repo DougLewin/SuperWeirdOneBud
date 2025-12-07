@@ -88,7 +88,18 @@ S3_KEY = "Rotto_Tracker.csv"
 # Initialize S3 client
 try:
     # First try Streamlit secrets (for Streamlit Cloud deployment)
-    if 'AWS_ACCESS_KEY_ID' in st.secrets:
+    # Support both [connections.s3] section and top-level secrets
+    if 'connections' in st.secrets and 's3' in st.secrets['connections']:
+        # Format: [connections.s3] with AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
+        s3_config = st.secrets['connections']['s3']
+        s3 = boto3.client(
+            's3',
+            region_name=s3_config.get('AWS_DEFAULT_REGION', 'ap-southeast-2'),
+            aws_access_key_id=s3_config['AWS_ACCESS_KEY_ID'],
+            aws_secret_access_key=s3_config['AWS_SECRET_ACCESS_KEY']
+        )
+    elif 'AWS_ACCESS_KEY_ID' in st.secrets:
+        # Format: top-level AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
         s3 = boto3.client(
             's3',
             region_name='ap-southeast-2',
