@@ -43,7 +43,7 @@ GEMINI_API_KEY = "your-api-key-here"
 - Already added to `requirements.txt`
 
 ### Implementation
-- **Model**: `gemini-pro` (Google's text generation model)
+- **Model**: `gemini-2.5-flash` (Google's latest flash model)
 - **Chat History**: Stored in Streamlit session state
 - **UI Component**: `st.popover()` with custom CSS styling
 - **Position**: Fixed positioning with z-index 999 for persistent visibility

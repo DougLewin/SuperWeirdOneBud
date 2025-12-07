@@ -191,7 +191,8 @@ try:
     if hasattr(st, 'secrets') and st.secrets:
         if 'GEMINI_API_KEY' in st.secrets:
             genai.configure(api_key=st.secrets['GEMINI_API_KEY'])
-            gemini_model = genai.GenerativeModel('gemini-pro')
+            # Use gemini-2.5-flash (latest model)
+            gemini_model = genai.GenerativeModel('gemini-2.5-flash')
         else:
             # Secrets exist but no GEMINI_API_KEY - silently disable chatbot
             pass
